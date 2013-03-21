@@ -3,7 +3,7 @@
 Plugin Name: Tiny URL
 Plugin URI: http://www.prasannasp.net/wordpress-plugins/tiny-url/
 Description: This plugin automatically adds a tiny URL for all blog posts after post content. Uses http://tinyurl.com/ service to get Tiny URLs.
-Version: 1.3.2
+Version: 1.3.4
 Author: Prasanna SP
 Author URI: http://www.prasannasp.net/
 */
@@ -36,13 +36,13 @@ function tu_tiny_url($url) {
     return $tinyurl;
 }
 
-
 function show_tu_copy_button() {
 	$options = get_option('tinyurl_options');
 	$buttontext = $options['tinyurl_button_text'];
+	$url = tu_tiny_url(get_permalink($post->ID));
 	if ( isset($options['copy_url_button']) )
 	
-	return '<span id="tiny-url-button-div" style="position:relative"><button type="button" id="tiny-url-button" class="tiny-url-button">'.$buttontext.'</button></span>';
+	return '<span id="tiny-url-button-div" style="position:relative"><button type="button" id="tiny-url-button" class="tiny-url-button" data-clipboard-text="'.$url.'">'.$buttontext.'</button></span>';
 }
 
 function tu_show_tiny_url($showtinyurl) {
@@ -82,36 +82,27 @@ function TinyURLSelectAll(id)
 
 add_action('wp_footer', 'tu_tinyurl_select_script');
 
+function tu_load_zeroclipboard_js() {
+	$options = get_option('tinyurl_options');
+	if ( isset($options['copy_url_button']) ) {
+	wp_enqueue_script('jquery-zeroclipboard', plugins_url('/js/ZeroClipboard.js', __FILE__), array('jquery'));
+	wp_enqueue_script('jquery-zeroclipboard-main', plugins_url('/js/ZeroClipboardMain.js', __FILE__), array('jquery'));
+	}
+}
+add_action('wp_enqueue_scripts', 'tu_load_zeroclipboard_js');
+
 function tu_tinyurl_copy_script() {
 	$options = get_option('tinyurl_options');
 	if ( is_single() && isset($options['copy_url_button']) || is_page() && isset($options['copy_url_button']) ) {
 ?>
-<script type="text/javascript" src="<?php echo '' .plugins_url( 'js/ZeroClipboard.js' , __FILE__ ). ''; ?>"></script>
-<script language="JavaScript">
-  ZeroClipboard.setMoviePath( '<?php echo '' .plugins_url( 'swf/ZeroClipboard10.swf' , __FILE__ ). ''; ?>' );
-      var clip = new ZeroClipboard.Client();
-
-      clip.setText( '' ); // will be set later on mouseDown
-      clip.setHandCursor( true );
-      clip.setCSSEffects( true );
-
-      clip.addEventListener( 'onComplete', function(client, text) {
-        alert("Tiny URL copied to clipboard:");
-      } );
-
-      clip.addEventListener( 'onMouseDown', function(client) {
-
-        clip.setText( document.getElementById('tinyurl').value );
-
-      } );
-
-      clip.glue( 'tiny-url-button', 'tiny-url-button-div' );
-    </script>
+<script type="text/javascript">
+ZeroClipboard.setDefaults( { moviePath: '<?php echo '' .plugins_url( 'swf/ZeroClipboard.swf' , __FILE__ ). ''; ?>' } );
+</script>
 <?php
 	}
 }
 
-add_action('wp_footer', 'tu_tinyurl_copy_script');
+add_action('wp_head', 'tu_tinyurl_copy_script');
 
 // Set-up Action and Filter Hooks
 register_activation_hook(__FILE__, 'tinyurl_add_defaults');

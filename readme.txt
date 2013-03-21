@@ -1,26 +1,26 @@
 === Tiny URL ===
 Contributors: prasannasp
 Donate link: http://www.prasannasp.net/donate/
-License: GPLv3
-License URI: http://www.gnu.org/copyleft/gpl.html
 Tags: TinyURL, Tiny URL, ShortURL, Short URL, short link, ShortLink, post
-Requires at least: 2.5
-Tested up to: 3.5
-Stable tag: 1.3.2
+Requires at least: 3.0
+Tested up to: 3.5.1
+Stable tag: 1.3.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Show a Tiny URL for all of your blog posts and optionally for pages
 
 == Description ==
 
-This plugin shows Tiny URL for each of your blog posts after post content. Tiny URLs are great for sharing your posts on micro-blogging sites like twitter, identi.ca etc., This plugin sends the URL of current post or page to <a href="http://tinyurl.com">TinyURL.com</a> and gets a Tiny URL for the same. Then it shows that Tiny URL after post content. User can just click on the box to select URL, or click on Copy button to Copy the Tiny URL to clipboard. You can also show Tiny URL for pages by selecting <em>Show Tiny URL on pages</em> option in plugin settings page.
+This plugin shows Tiny URL for each of your blog posts after post content. Tiny URLs are great for sharing your posts on micro-blogging sites like twitter, identi.ca etc., This plugin sends the URL of current post or page to [TinyURL.com](http://tinyurl.com) and gets a Tiny URL for the same. Then it shows that Tiny URL after post content. User can just click on the box to select URL, or click on Copy button to Copy the Tiny URL to clipboard. You can also show Tiny URL for pages by selecting *Show Tiny URL on pages* option in plugin settings page.
 
-<strong>Note:</strong> Please read TinyURL's <a href="http://tinyurl.com/#terms">terms of use</a> before activating the plugin. You must abide by them after activating the plugin. TinyURL is a trademark of TinyURL, LLC
+**Note:** Please read TinyURL's [terms of use](http://tinyurl.com/#terms) before activating the plugin. You must abide by them after activating the plugin. TinyURL is a trademark of TinyURL, LLC
 
-<strong>Demo:</strong> See demo of this plugin here - <a href="http://demo.prasannasp.net/tiny-url/">Tiny URL WordPress plugin demo</a>
+**Demo:** See demo of this plugin here - [Tiny URL WordPress plugin demo](http://demo.prasannasp.net/tiny-url/)
 
-<strong>Support:</strong> Please post your support questions at <a href="http://forum.prasannasp.net/forum/plugin-support/tiny-url/">Tiny URL plugin support forum</a>
+**Support:** Please post your support questions at [Tiny URL plugin support forum](http://forum.prasannasp.net/forum/plugin-support/tiny-url/)
 
-Visit <a href="http://www.prasannasp.net/wordpress-plugins/">this page</a> for more <strong>WordPress Plugins</strong> from the developer.
+Visit [this page](http://www.prasannasp.net/wordpress-plugins/) for more **WordPress Plugins** from the developer.
 
 == Installation ==
 
@@ -75,6 +75,16 @@ color: #654321;
 
 == Changelog ==
 
+= 1.3.4 =
+
+* Enqueue ZeroClipboard js files only if the copy to clipboard option is enabled.
+* Moved inline jQuery script to a new file `ZeroClipboardMain.js`
+
+= 1.3.3 =
+
+* Fixed an XSS vulnerability caused by an older version of the ZeroClipboard. Updated ZeroClipboard.swf and ZeroClipboard.js.
+* Correctly enqueue the minified version of ZeroClipboard.js
+
 = 1.3.2 =
 
 * Security update: Validate input for Copy button text
@@ -106,4 +116,5 @@ color: #654321;
 * Initial public release.
 
 == Upgrade Notice ==
-* No Upgrade Notice so far.
+
+* Version 1.3, 1.3.1 and 1.3.2 has an XSS vulnerability. If you are using any of these versions, please update to version 1.3.3 as soon as possible.
